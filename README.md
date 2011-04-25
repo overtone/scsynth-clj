@@ -1,13 +1,9 @@
 # scsynth-clj
 
-FIXME: write description
-
-## Usage
-
-FIXME: write
+git clone --recursive git://github.com/overtone/scsynth-clj.git
 
 ## License
 
-Copyright (C) 2011 FIXME
+Copyright (C) 2011 Fabian Aussems
 
 Distributed under the Eclipse Public License, the same as Clojure.
