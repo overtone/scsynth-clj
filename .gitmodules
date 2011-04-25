@@ -1,3 +1,6 @@
 [submodule "supercollider"]
 	path = supercollider
 	url = git://supercollider.git.sourceforge.net/gitroot/supercollider/supercollider
+[submodule "checkouts/clj-native"]
+	path = checkouts/clj-native
+	url = git://github.com/overtone/clj-native.git
