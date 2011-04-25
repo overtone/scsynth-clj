@@ -1,14 +1,12 @@
 # scsynth-clj
 
-git clone --recursive git://github.com/overtone/scsynth-clj.git
+    git clone --recursive git://github.com/overtone/scsynth-clj.git
 
 ## Compiling on Ubuntu Maverick Meerkat
 
 Dependencies
 
     sudo apt-get install cmake ......
-
-
 
 ## Compiling on Mac OS X Snow Leopard
 
@@ -21,10 +19,7 @@ Dependencies
 ## Compiling on Windows XP
 
 Microsoft Visual C++ 2008
-
 CMake
-
-
 
 ## License
 
