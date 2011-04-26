@@ -18,6 +18,7 @@
     cmake -DSC_PATH=$PWD/../supercollider/ .
     make
     cp source/*.so ../native/linux/x86_64/ugens
+    rm native/linux/x86_64/ugens/*_supernova.so
 
     ./install
 
@@ -33,7 +34,8 @@
 
 After starting overtone
 
-
+    jack_connect SuperCollider:out_1 "PulseAudio JACK Source:front-left"
+    jack_connect SuperCollider:out_2 "PulseAudio JACK Source:front-right"
 
 ## Compiling on Mac OS X Snow Leopard
 
