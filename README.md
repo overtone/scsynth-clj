@@ -6,7 +6,14 @@
 
 Dependencies
 
-    sudo apt-get install cmake ......
+    sudo apt-get install cmake build-essential libjack-dev libsndfile1-dev libreadline-dev libfftw3-dev libicu-dev
+
+    cd supercollider
+    git am ../0001-Added-scsynth-interop.cpp-and-scsynth-interop.h.patch
+    cmake -DSC_QT=OFF -DSC_EL=OFF .
+    make
+    cp server/scsynth/libscsynth.so ../native/linux/x86_64
+    cp server/plugins/*.so ../native/linux/x86_64/ugens
 
 ## Compiling on Mac OS X Snow Leopard
 
@@ -15,11 +22,6 @@ Dependencies
  * Homebrew
  * Git
  * Cmake
-
-## Compiling on Windows XP
-
-Microsoft Visual C++ 2008
-CMake
 
 ## License
 
