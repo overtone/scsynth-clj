@@ -2,7 +2,6 @@
   (:use [clj-native.direct :only [defclib loadlib typeof]]
         [clj-native.structs :only [byref byval]]
         [clj-native.callbacks :only [callback]])
-  (:use osc)
   (:import [com.sun.jna Pointer]
            [java.nio ByteBuffer ByteOrder]))
 
@@ -65,33 +64,37 @@
    (scsynth_interop_load_plugin [constchar*] void)
    (scsynth_interop_set_plugin_loaded_callback [loaded-cb] void)))
 
-(System/setProperty "jna.library.path" "native/linux/x86_64")
+(defn start [plugins-path]
+  (System/setProperty "jna.library.path" (System/getProperty "java.library.path"))
+  (loadlib scsynth)
+  (scsynth_interop_init)
+  (let [opts (scsynth_interop_get_default_start_options)]
+    (set! (.UGensPluginPath opts) plugins-path)
+    (scsynth_interop_start opts)))
 
-(loadlib scsynth)
-
-(scsynth_interop_init)
-
-(def *opts* (scsynth_interop_get_default_start_options))
-(set! (.UGensPluginPath *opts*) "native/linux/x86_64/ugens")
-
-(def *world* (scsynth_interop_start *opts*))
-
-(def *global-reply-callback*
+(defn make-reply-callback [reply-fn]
   (callback reply-cb (fn [addr buf size]
-                      (let [bb (.order (.getByteBuffer buf 0 size) ByteOrder/BIG_ENDIAN)
-                            msg (osc-decode-packet bb)]
-                        (println msg)
-                        ))))
+                       (let [bb (.order (.getByteBuffer buf 0 size) ByteOrder/BIG_ENDIAN)]
+                         (reply-fn bb)
+                         ))))
 
-(defn scsynth-send-packet [bb]
-  (scsynth_interop_send_packet *world* (.limit bb) bb *global-reply-callback*))
+(defn scsynth-send-packet [world reply-callback bb]
+  (scsynth_interop_send_packet world (.limit bb) bb reply-callback))
 
-(def *peer* (assoc (osc-peer) :send-fn (fn [peerobj buf] (scsynth-send-packet buf))))
+(comment
+  (use 'osc)
 
-(defn snd [path & args]
-  (apply osc-send *peer* path args))
+  (def *world* (start "native/linux/x86_64/ugens"))
 
-(snd "/status")
+  (def *global-reply-cb* (make-reply-callback (fn [bb] (let [msg (osc-decode-packet bb)]
+                                                        (println msg)))))
+
+  (def *peer* (assoc (osc-peer) :send-fn (fn [peerobj buf] (scsynth-send-packet *world* *global-reply-cb* buf))))
+
+  (defn snd [path & args]
+    (apply osc-send *peer* path args))
+
+  (snd "/status"))
 
 ;(scsynth_interop_wait_for_quit *world)
 ;(scsynth_interop_cleanup)
