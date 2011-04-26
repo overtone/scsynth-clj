@@ -78,7 +78,7 @@
                          (reply-fn bb)
                          ))))
 
-(defn scsynth-send-packet [world reply-callback bb]
+(defn send-packet [world reply-callback bb]
   (scsynth_interop_send_packet world (.limit bb) bb reply-callback))
 
 (comment
@@ -89,7 +89,7 @@
   (def *global-reply-cb* (make-reply-callback (fn [bb] (let [msg (osc-decode-packet bb)]
                                                         (println msg)))))
 
-  (def *peer* (assoc (osc-peer) :send-fn (fn [peerobj buf] (scsynth-send-packet *world* *global-reply-cb* buf))))
+  (def *peer* (assoc (osc-peer) :send-fn (fn [peerobj buf] (send-packet *world* *global-reply-cb* buf))))
 
   (defn snd [path & args]
     (apply osc-send *peer* path args))
