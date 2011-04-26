@@ -13,9 +13,14 @@
     cp server/scsynth/libscsynth.so ../native/linux/x86_64
     cp server/plugins/*.so ../native/linux/x86_64/ugens
 
+    cd ../sc3-plugins
+    cmake -DSC_PATH=$PWD/../supercollider/ .
+    make
+    cp source/*.so ../native/linux/x86_64/ugens
+
 ## Using Jack with Pulseaudio on Ubuntu Maverick Meerkat
 
-    sudo apt-get install pulseaudio-module-jack jackd2
+    sudo apt-get install pulseaudio-module-jack jackd1
 
     cat > ~/.jackdrc <<EOF
     /usr/bin/jackd -r -ddummy -r48000 -p1024
