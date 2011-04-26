@@ -4,8 +4,6 @@
 
 ## Compiling on Ubuntu Maverick Meerkat
 
-Dependencies
-
     sudo apt-get install cmake build-essential libjack-dev libsndfile1-dev libreadline-dev libfftw3-dev libicu-dev
 
     cd supercollider
@@ -15,6 +13,16 @@ Dependencies
     cp server/scsynth/libscsynth.so ../native/linux/x86_64
     cp server/plugins/*.so ../native/linux/x86_64/ugens
 
+## Using Jack with Pulseaudio on Ubuntu Maverick Meerkat
+
+    sudo apt-get install pulseaudio-module-jack jackd2
+
+    cat > ~/.jackdrc <<EOF
+    /usr/bin/jackd -r -ddummy -r48000 -p1024
+    EOF
+    pacmd load-module module-jack-source channels=2 connect=false;
+    pacmd load-module module-loopback source=jack_in;
+
 ## Compiling on Mac OS X Snow Leopard
 
 Dependencies
@@ -22,6 +30,9 @@ Dependencies
  * Homebrew
  * Git
  * Cmake
+ * Xcode
+
+
 
 ## License
 
