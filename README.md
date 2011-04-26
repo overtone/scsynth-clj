@@ -21,7 +21,7 @@
 
 ## Using Jack with Pulseaudio on Ubuntu Maverick Meerkat
 
-    sudo apt-get install pulseaudio-module-jack jackd1
+    sudo apt-get install pulseaudio-module-jack jackd2
 
     cat > ~/.jackdrc <<EOF
     /usr/bin/jackd -r -ddummy -r48000 -p1024
