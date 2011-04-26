@@ -1,6 +1,7 @@
 # scsynth-clj
 
     git clone --recursive git://github.com/overtone/scsynth-clj.git
+    git submodule foreach git pull
 
 ## Compiling on Ubuntu Maverick Meerkat
 
