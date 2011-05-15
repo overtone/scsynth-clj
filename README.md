@@ -21,11 +21,11 @@ In the commands below replace {platform} with one of <linux, macosx, windows> an
 #### Compile SuperCollider
 
     cd supercollider
-    git co -b scsynth-clj
+    git checkout -b scsynth-clj
     git am ../0001-Added-scsynth-interop.cpp-and-scsynth-interop.h.patch
     mkdir scsynth_clj_build
     cd scsynth_clj_build
-    cmake -DSC_QT=OFF -DSC_EL=OFF ..
+    cmake -DSC_QT=OFF -DSC_EL=OFF -DSUPERNOVA=off ..
     make
     cp server/scsynth/libscsynth.so ../../native/{platform}/{arch}
     cp server/plugins/*.so ../../native/{platform}/{arch}/ugens
@@ -35,12 +35,9 @@ In the commands below replace {platform} with one of <linux, macosx, windows> an
     cd ../sc3-plugins
     mkdir scsynth_clj_build
     cd scsynth_clj_build
-    cmake -DSC_PATH=$PWD/../supercollider/ ..
+    cmake -DSC_PATH=$PWD/../supercollider/ -DSUPERNOVA=off ..
     make
     cp source/*.so ../../native/{platform}/{arch}/ugens
-    
-    cd ../..
-    rm native/{platform}/{arch}/ugens/*_supernova.so
 
 #### Install
 
