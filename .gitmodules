@@ -1,6 +1,0 @@
-[submodule "sc3-plugins"]
-	path = sc3-plugins
-	url = git://sc3-plugins.git.sourceforge.net/gitroot/sc3-plugins/sc3-plugins
-[submodule "supercollider"]
-	path = supercollider
-	url = git://supercollider.git.sourceforge.net/gitroot/supercollider/supercollider

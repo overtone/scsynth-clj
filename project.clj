@@ -1,4 +1,4 @@
-(defproject overtone/scsynth-clj "0.0.1-SNAPSHOT"
+(defproject overtone/scsynth-clj "0.0.2-SNAPSHOT"
   :description "Supercollider Interop for Clojure"
   :dependencies [[org.clojure/clojure "1.2.1"]
                  [org.clojure/clojure-contrib "1.2.0"]
