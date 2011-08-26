@@ -16,12 +16,14 @@ dependencies
 realtime
 
     sudo su -c 'echo @audio - rtprio 99 >> /etc/security/limits.conf'
-    sudo su -c 'echo @audio - memlock 250000 >> /etc/security/limits.conf'
+    sudo su -c 'echo @audio - memlock unlimited >> /etc/security/limits.conf'
     sudo su -c 'echo @audio - nice -10 >> /etc/security/limits.conf'
     sudo su -c 'echo realtime-scheduling = yes >> /etc/pulse/daemon.conf'
 
 no realtime
 
+    sudo su -c 'echo @audio - rtprio 95 >> /etc/security/limits.conf'
+    sudo su -c 'echo @audio - memlock unlimited >> /etc/security/limits.conf'
     sudo su -c 'echo realtime-scheduling = no >> /etc/pulse/daemon.conf'
 
 After starting overtone
