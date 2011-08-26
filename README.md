@@ -10,10 +10,17 @@
     pacmd load-module module-jack-source channels=2 connect=false;
     pacmd load-module module-loopback source=jack_in;
 
+realtime priority for audio group
+
+    sudo su -c 'echo @audio - rtprio 99 >> /etc/security/limits.conf'
+    sudo su -c 'echo @audio - memlock 250000 >> /etc/security/limits.conf'
+    sudo su -c 'echo @audio - nice -10 >> /etc/security/limits.conf'
+
 After starting overtone
 
     jack_connect SuperCollider:out_1 "PulseAudio JACK Source:front-left"
     jack_connect SuperCollider:out_2 "PulseAudio JACK Source:front-right"
+
 
 ## License
 
