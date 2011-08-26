@@ -2,19 +2,27 @@
 
 ## Using Jack with Pulseaudio on Ubuntu Maverick Meerkat
 
+dependencies
+
     sudo apt-get install pulseaudio-module-jack jackd2
 
     cat > ~/.jackdrc <<EOF
-    /usr/bin/jackd -r -ddummy -r48000 -p1024
+    /usr/bin/jackd -ddummy -r48000 -p1024
     EOF
-    pacmd load-module module-jack-source channels=2 connect=false;
-    pacmd load-module module-loopback source=jack_in;
-
-realtime priority for audio group
+    
+    sudo su -c 'load-module module-jack-source channels=2 connect=false >> /etc/pulse/default.pa'
+    sudo su -c 'load-module module-loopback source=jack_in >> /etc/pulse/default.pa'
+    
+realtime
 
     sudo su -c 'echo @audio - rtprio 99 >> /etc/security/limits.conf'
     sudo su -c 'echo @audio - memlock 250000 >> /etc/security/limits.conf'
     sudo su -c 'echo @audio - nice -10 >> /etc/security/limits.conf'
+    sudo su -c 'realtime-scheduling = yes >> /etc/pulse/daemon.conf'
+
+no realtime
+
+    sudo su -c 'realtime-scheduling = no >> /etc/pulse/daemon.conf'
 
 After starting overtone
 
